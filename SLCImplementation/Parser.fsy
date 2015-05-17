@@ -1,0 +1,56 @@
+//pp.102-103
+%{
+open form
+%} 
+
+/* <= => rec */
+%token <int> NUM
+%token <string> IDENT
+%token LEFT RIGHT REC EQ PLUS MINUS TIMES HAT QMARK PA REN BRA CKET COMMA EOF
+%right LEFT RIGHT
+%nonassoc EQ
+%left PLUS MINUS
+%left TIMES
+%left HAT
+%right QMARK
+
+%start start
+%type <form.form> start
+%%
+
+start : form EOF {$1}
+
+form :
+| sform {$1}
+| num {SNum($1)}
+| form PLUS form {SAdd($1,$3)}
+| form MINUS form {SSub($1,$3)}
+| form TIMES form {SMul($1,$3)}
+| form HAT form {SUp($1,$3)}
+| form QMARK form {SDwn($1,$3)}
+| form EQ form {SEql($1,$3)}
+//SCLÇÃç\ï∂
+//| '[' forms ']' {sSqb($2)}
+//| '<' forms '>' {sAnb($2)}
+| sform LEFT form {SLft($1,$3)}
+| sform RIGHT form {SRgt($1,$3)}
+| REC sform EQ form {SRec($2,$4)}
+
+sform :
+| ide {SIde($1)}
+| PA forms REN {SPar($2)}
+| BRA forms CKET {SBrc($2)}
+
+forms :
+| /* empty */ {[]}
+| flist {$1}
+
+flist :
+| form {[$1]}
+| form COMMA flist {$1 :: $3}
+
+num : NUM {$1}
+
+ide : IDENT {$1}
+
+%%

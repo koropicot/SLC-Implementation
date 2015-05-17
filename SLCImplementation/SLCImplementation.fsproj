@@ -55,6 +55,7 @@
     <Compile Include="Lexer.fs" />
     <Compile Include="slc.fs" />
     <Compile Include="parse.fs" />
+    <Compile Include="unify.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
     <None Include="packages.config" />

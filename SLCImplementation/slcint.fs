@@ -1,5 +1,5 @@
 ﻿//CBV interpreter for SLC terms (pp.112-113)
-module slceval
+module slcint
 open slc
 open cbveval
 

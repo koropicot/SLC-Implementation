@@ -59,7 +59,7 @@
     <Compile Include="typesys.fs" />
     <Compile Include="slctype.fs" />
     <Compile Include="cbveval.fs" />
-    <Compile Include="slceval.fs" />
+    <Compile Include="slcint.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
     <None Include="packages.config" />

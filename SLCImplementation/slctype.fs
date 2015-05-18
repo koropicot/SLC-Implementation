@@ -6,9 +6,9 @@ open unify
 let bt (n, t, l) =
     PT(n+1, TFun("|-", TVar(n+1)::t), List.map (fun (x, y)->(x, TFun("|-", TVar(n+1)::y))) l)
 
-let ext r v i =
-    if i=v then (1, TFun(",", [V1;V_]), V1)
-    else let (n,G,T)=r i in (n, TFun(",", [V_;G]), T)
+let ext r v =
+    fun i -> if i=v then (1, TFun(",", [V1;V_]), V1)
+                else let (n,G,T)=r i in (n, TFun(",", [V_;G]), T)
 
 let rec typeE e r =
     match e with

@@ -12,8 +12,7 @@ type Type =
     | TCoprod of Type * Type
     | TCoexp of Type * Type
 
-let rec tterm ty =
-    match ty with
+let rec tterm = function
     | TVV n -> TVar n
     | TBas t -> TFun(t, [])
     | TUnit -> TFun("unit", [])
@@ -23,8 +22,7 @@ let rec tterm ty =
     | TCoprod (t1,t2) -> TFun("+", [tterm t1; tterm t2])
     | TCoexp (t1,t2) -> TFun("<-", [tterm t1; tterm t2])
 
-let rec termt term =
-    match term with
+let rec termt = function
     | TVar n -> TVV n
     | TFun ("unit", []) -> TUnit
     | TFun ("*", [t1;t2]) -> TProd (termt t1,termt t2)

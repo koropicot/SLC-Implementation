@@ -15,8 +15,7 @@ let rec unify (x1,x2) =
             | (t1, (TVar x2)) -> bind x2 t1
             | (TFun(f1,l1), TFun(f2,l2)) ->
                 if f1=f2 then unifylist (l1,l2) else failwith "functor"
-and unifylist p =
-    match p with
+and unifylist = function
     | ([],[]) -> emptysubst
     | (x1::l1, x2::l2) ->
         let sl=unifylist (l1,l2) in
@@ -26,16 +25,13 @@ and unifylist p =
 and bind x t =
     if occurs x t then failwith "occur"
     else (fun x1->if x1=x then t else TVar x1)
-and substitute s t =
-    match t with
+and substitute s = function
     | TVar x -> s x
     | TFun (f,l) -> TFun(f, List.map (substitute s) l)
-and occurs x t =
-    match t with
+and occurs x = function
     | TVar x1 -> x1=x
     | TFun (_,l) -> foldor (occurs x) l
-and foldor f l =
-    match l with
+and foldor f = function
     | [] -> false
     | h::t -> (f h) || (foldor f t)
 
@@ -62,15 +58,12 @@ and solvelist l x s =
 
 (* generalize term to clause *)
 
-let rec addl x l =
-    match l with
+let rec addl x = function
     | [] -> (1,[x])
     | h::t -> if x=h then (1,h::t) else let (n,t1)=addl x t in (n+1,h::t1)
-and gen vl t =
-    match t with
+and gen vl = function
     | TVar v -> let (n,vl1) = addl v vl in (vl1,TVar n)
     | TFun (f,a) -> let (vl1,a1) = genl vl a in (vl1,TFun(f,a1))
-and genl vl l =
-    match l with
+and genl vl = function
     | [] -> (vl,[])
     | h::t -> let (vl1,h1)=gen vl h in let (vl2,t1)=genl vl1 t in (vl2,h1::t1)

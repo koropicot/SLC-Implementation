@@ -57,6 +57,7 @@
     <Compile Include="parse.fs" />
     <Compile Include="unify.fs" />
     <Compile Include="typesys.fs" />
+    <Compile Include="slctype.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
     <None Include="packages.config" />

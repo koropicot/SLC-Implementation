@@ -58,6 +58,7 @@
     <Compile Include="unify.fs" />
     <Compile Include="typesys.fs" />
     <Compile Include="slctype.fs" />
+    <Compile Include="cbveval.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
     <None Include="packages.config" />

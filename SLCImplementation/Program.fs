@@ -24,10 +24,10 @@ let rec repl () =
         printfn "        quit repl"
         repl ()
     | "def"::x::((_::_) as s)->
-        try zd x (pre_parse (List.reduce (+) s)) with ex -> printfn "Error: %s" ex.Message
+        try zd x (pre_parse (String.Join(" ", s))) with ex -> printfn "Error: %s" ex.Message
         repl ()
     | _::_ as s ->
-        try z (pre_parse (List.reduce (+) s)) with ex -> printfn "Error: %s" ex.Message
+        try z (pre_parse (String.Join(" ", s))) with ex -> printfn "Error: %s" ex.Message
         repl ()
     | _ ->
         printfn "show usage: >help"

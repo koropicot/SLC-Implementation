@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="form.fs" />
     <Compile Include="lexer.fs" />
+    <Compile Include="parser.fs" />
     <Compile Include="slc.fs" />
     <Compile Include="parse.fs" />
     <Compile Include="unify.fs" />

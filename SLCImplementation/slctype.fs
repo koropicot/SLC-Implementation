@@ -37,6 +37,7 @@ and typeF f r =
     | FPrm "-" -> bt(0, [TFun ("*", [tCst "int"; tCst "int"]); tCst "int"], [])
     | FPrm "*" -> bt(0, [TFun ("*", [tCst "int"; tCst "int"]); tCst "int"], [])
     | FPrm "=" -> bt(1, [TFun ("*", [V1;V1]); TFun("+",[tCst "unit";tCst "unit"])], [])
+    | FPrm "~" -> bt(0, [tCst "int"; tCst "int"], [])
     | FPrm _ -> failwith "typeF: unknown primitive function"
     | FRgt (x,e) ->
         let (r1,ptx) = typeX x r in

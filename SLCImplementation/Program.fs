@@ -1,13 +1,10 @@
 ﻿module Program
 open System
 open form
-open Lexer
-open Parser 
-open Microsoft.FSharp.Text.Lexing
 open toplev
 
 //string -> tokens -> form
-let pre_parse = LexBuffer<_>.FromString >> Parser.start Lexer.token
+let pre_parse = lexer.tokenize >> parser.parse
 
 //REPL
 let rec repl () =

@@ -1,6 +1,4 @@
 ﻿module parser
-open lexer
-open form
 
 type Parser<'s, 'r> = 's[] * int->Option<'r * int>
 type Either<'l, 'r> = | Left of 'l | Right of 'r
@@ -50,57 +48,8 @@ let _2 t = t|>tt|>th
 let _3 t = t|>tt|>tt|>th
 let _4 t = t|>tt|>tt|>tt|>th
 
-
-let rec start (s: token[] * int) =
-    form .%& terminal EOF
-    <| s
-and form s =
-    eform
-    <| s
-and eform s =
-    pform %& opt (terminal EQ %&. pform) 
-        +>= fun (l, o) -> match o with | Some r -> SEql(l, r) | None -> l
-    <| s
-and pform s =
-    chainl tform
-        (terminal PLUS +> (fun a b -> SAdd(a, b)) .| terminal MINUS +> (fun a b -> SSub(a, b)))
-    <| s
-and tform s =
-    chainl hform (terminal TIMES +> fun a b -> SMul(a, b))
-    <| s
-and hform s =
-    chainl qform (terminal HAT +> fun a b -> SUp(a, b))
-    <| s
-and qform s =
-    chainr nform (terminal QMARK +> fun a b -> SDwn(a, b))
-    <| s
-and nform s =
-    num +>= SNum
-    .| terminal REC **+ sform **+ terminal EQ **. form +>= fun r -> SRec (_2 r, _4 r)
-    .| sform %& opt ((terminal LEFT %&. form) %| (terminal RIGHT %&. form)) 
-        +>= fun (h, o) ->
-            match o with
-            | Some (Left body) -> SLft (h, body)
-            | Some (Right body) -> SRgt (h, body)
-            | None -> h
-    <| s
-and sform s =
-    terminal PA %&. forms .%& terminal REN +>= SPar
-    .| terminal BRA %&. forms .%& terminal CKET +>= SBrc
-    .| ident +>= SIde
-    <| s
-and forms s =
-    flist
-    .| ret []
-    <| s
-and flist s = 
-    form %& rep (terminal COMMA %&. form) +>= fun (h, t) -> h :: t
-    <| s
-and ident s = terminate (function | IDENT name -> Some name | _ -> None) <| s
-and num s = terminate (function | NUM num -> Some num | _ -> None) <| s
-
-let parse s =
-    match start (s, 0) with
+let parse (parser:Parser<'s, 'r>) s =
+    match parser (s, 0) with
     | Some (r, _) -> r
     | None -> failwith "parse error"
 

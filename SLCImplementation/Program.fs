@@ -1,10 +1,7 @@
 ﻿module Program
 open System
-open form
+open preparse
 open toplev
-
-//string -> tokens -> form
-let pre_parse = lexer.tokenize >> parser.parse
 
 //REPL
 let rec repl () =

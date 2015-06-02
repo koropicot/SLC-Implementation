@@ -21,10 +21,12 @@ let patterns = [|
         (@"[a-zA-Z_'][a-zA-Z0-9_']*", value >> IDENT >> Some)
     |]
 
-let rec start (s: token[] * int) =
-    form .%& terminal EOF
-    <| s
-and form s =
+let curry f a b = f (a,b)
+
+let ident s = terminate (function | IDENT name -> Some name | _ -> None) <| s
+let num s = terminate (function | NUM num -> Some num | _ -> None) <| s
+
+let rec form s =
     eform
     <| s
 and eform s =
@@ -33,25 +35,25 @@ and eform s =
     <| s
 and pform s =
     chainl tform
-        (terminal PLUS +> (fun a b -> SAdd(a, b)) .| terminal MINUS +> (fun a b -> SSub(a, b)))
+        (terminal PLUS +> curry SAdd .| terminal MINUS +> curry SSub)
     <| s
 and tform s =
-    chainl hform (terminal TIMES +> fun a b -> SMul(a, b))
+    chainl hform (terminal TIMES +> curry SMul)
     <| s
 and hform s =
-    chainl qform (terminal HAT +> fun a b -> SUp(a, b))
+    chainl qform (terminal HAT +> curry SUp)
     <| s
 and qform s =
-    chainr nform (terminal QMARK +> fun a b -> SDwn(a, b))
+    chainr nform (terminal QMARK +> curry SDwn)
     <| s
 and nform s =
     num +>= SNum
-    .| terminal REC **+ sform **+ terminal EQ **. form +>= fun r -> SRec (_2 r, _4 r)
+    .| terminal REC %&. sform .%& terminal EQ %& form +>= SRec
     .| sform %& opt ((terminal LEFT %&. form) %| (terminal RIGHT %&. form)) 
         +>= fun (h, o) ->
             match o with
-            | Some (Left body) -> SLft (h, body)
-            | Some (Right body) -> SRgt (h, body)
+            | Some(Left body) -> SLft(h, body)
+            | Some(Right body) -> SRgt(h, body)
             | None -> h
     <| s
 and sform s =
@@ -66,7 +68,9 @@ and forms s =
 and flist s = 
     form %& rep (terminal COMMA %&. form) +>= fun (h, t) -> h :: t
     <| s
-and ident s = terminate (function | IDENT name -> Some name | _ -> None) <| s
-and num s = terminate (function | NUM num -> Some num | _ -> None) <| s
+
+let start (s: token[] * int) =
+    form .%& terminal EOF
+    <| s
 
 let pre_parse = tokenize EOF patterns >> parse start

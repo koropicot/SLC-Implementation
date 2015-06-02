@@ -18,3 +18,8 @@ type form =
 // SCLの構文
 //    | SSqb of form list
 //    | SAnb of form list
+
+// トップレベルの構文
+type top =
+    | Def of string * form
+    | Eval of form

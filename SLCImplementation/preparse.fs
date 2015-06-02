@@ -4,7 +4,7 @@ open parser
 open form
 
 type token = 
-    | LEFT | RIGHT | REC | EQ
+    | LEFT | RIGHT | REC | EQ | DEF
     | PLUS | MINUS | TIMES
     | HAT | QMARK
     | PA | REN | BRA | CKET | COMMA
@@ -13,7 +13,7 @@ type token =
     | EOF
 
 let patterns = [|
-        (@"\s", skip); (@"[0-9]+", value >> int>> NUM >> Some);
+        (@"\s", skip); (@"[0-9]+", value >> int>> NUM >> Some); (":=", constant DEF)
         ("<=", constant LEFT); ("=>", constant RIGHT); ("rec", constant REC); ("=", constant EQ);
         ("\+", constant PLUS); ("\-", constant MINUS); ("\*", constant TIMES);
         ("\^", constant HAT); ("\?", constant QMARK);
@@ -70,7 +70,8 @@ and flist s =
     <| s
 
 let start (s: token[] * int) =
-    form .%& terminal EOF
+    ident .%& terminal DEF %& form  .%& terminal EOF +>= Def
+    .| form .%& terminal EOF +>= Eval
     <| s
 
 let pre_parse = tokenize EOF patterns >> parse start

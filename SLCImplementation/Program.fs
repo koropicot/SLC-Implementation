@@ -1,14 +1,15 @@
 ﻿module Program
 open System
+open form
 open preparse
 open toplev
 
 //REPL
 let rec repl () =
     printf ">"
-    match Console.ReadLine().Trim().Split(' ', '\t') |> List.ofArray |> List.filter ((<>) "") with
-    | ["quit"] -> ()
-    | ["help"] | ["h"] ->
+    match Console.ReadLine().Trim() with
+    | "quit" -> ()
+    | "help" | "" ->
         printfn "Usage:"
         printfn "    >expression"
         printfn "        evaluate expression"
@@ -17,14 +18,14 @@ let rec repl () =
         printfn "    >quit"
         printfn "        quit repl"
         repl ()
-    | "def"::x::((_::_) as s)->
-        try zd x (pre_parse (String.Join(" ", s))) with ex -> printfn "Error: %s" ex.Message
-        repl ()
-    | _::_ as s ->
-        try z (pre_parse (String.Join(" ", s))) with ex -> printfn "Error: %s" ex.Message
-        repl ()
-    | _ ->
-        printfn "show usage: >help"
+    | s ->
+        try
+            match pre_parse s with
+            | Def (n, e) -> zd n e
+            | Eval e -> z e
+        with ex ->
+            printfn "Error: %s" ex.Message
+            printfn "show usage: >help"
         repl ()
 
 [<EntryPoint>]

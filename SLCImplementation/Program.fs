@@ -13,7 +13,7 @@ let rec repl () =
         printfn "Usage:"
         printfn "    >expression"
         printfn "        evaluate expression"
-        printfn "    >def name expression"
+        printfn "    >name := expression"
         printfn "        evaluate expression and define it"
         printfn "    >quit"
         printfn "        quit repl"

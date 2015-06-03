@@ -1,36 +1,31 @@
 ﻿module Program
 open System
 open form
-open Lexer
-open Parser 
-open Microsoft.FSharp.Text.Lexing
+open preparse
 open toplev
-
-//string -> tokens -> form
-let pre_parse = LexBuffer<_>.FromString >> Parser.start Lexer.token
 
 //REPL
 let rec repl () =
     printf ">"
-    match Console.ReadLine().Trim().Split(' ', '\t') |> List.ofArray |> List.filter ((<>) "") with
-    | ["quit"] -> ()
-    | ["help"] | ["h"] ->
+    match Console.ReadLine().Trim() with
+    | "quit" -> ()
+    | "help" | "" ->
         printfn "Usage:"
         printfn "    >expression"
         printfn "        evaluate expression"
-        printfn "    >def name expression"
+        printfn "    >name := expression"
         printfn "        evaluate expression and define it"
         printfn "    >quit"
         printfn "        quit repl"
         repl ()
-    | "def"::x::((_::_) as s)->
-        try zd x (pre_parse (String.Join(" ", s))) with ex -> printfn "Error: %s" ex.Message
-        repl ()
-    | _::_ as s ->
-        try z (pre_parse (String.Join(" ", s))) with ex -> printfn "Error: %s" ex.Message
-        repl ()
-    | _ ->
-        printfn "show usage: >help"
+    | s ->
+        try
+            match pre_parse s with
+            | Def (n, e) -> zd n e
+            | Eval e -> z e
+        with ex ->
+            printfn "Error: %s" ex.Message
+            printfn "show usage: >help"
         repl ()
 
 [<EntryPoint>]

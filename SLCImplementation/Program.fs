@@ -21,8 +21,8 @@ let rec repl () =
     | s ->
         try
             match pre_parse s with
-            | Def (n, e) -> zd n e
-            | Eval e -> z e
+            | Def (n, e) -> printfn "%s" (zd_to_str n e)
+            | Eval e -> printfn "%s" (z_to_str e)
         with ex ->
             printfn "Error: %s" ex.Message
             printfn "show usage: >help"

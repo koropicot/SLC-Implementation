@@ -1,0 +1,180 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Code+Pro);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.0.8/jquery.mCustomScrollbar.min.css);
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css);
+
+*{
+	font-family: 'Source Code Pro', 'Meiryo';
+}
+
+html, body{
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+.container{
+	margin: auto;
+	height: 100%;
+	width: 95%;
+	max-width: 720px;
+}
+
+.card{
+	background-color: #FFFFFF;
+	margin: 10px 5px;
+	padding: 5px;
+	-webkit-box-shadow: 0 0 3px #B0B0B0;
+	box-shadow: 0 0 3px #B0B0B0;
+	word-break: break-all;
+}
+
+.card.error{
+	-webkit-box-shadow: 0 0 4px #FF5353;
+	box-shadow: 0 0 4px #FF5353;
+}
+
+.code{
+	border-style: solid;
+	border-color: #A7A7A7;
+	border-width: 0 0 1px 12px;
+	padding: 4px 10px;
+	font-size: 18px;
+}
+
+.card .code{
+	margin: 5px;
+}
+
+.card p{
+	margin: 5px;
+}
+
+textarea{
+	outline: 0;
+	resize: none;
+}
+
+textarea:hover{
+	border-color: #E4AAFF;
+}
+
+
+textarea:focus{
+	border-color: #E4AAFF;
+}
+
+textarea, textarea:hover, textarea:focus{
+	transition: border-color .2s;
+	-moz-transition: border-color .2s;
+	-webkit-transition: border-color .2s;
+	-o-transition: border-color .2s;
+}
+
+#center{
+	height: -webkit-calc(100% - 160px);
+	height: calc(100% - 160px);
+}
+
+#output{
+	position: relative;
+	box-sizing: border-box;
+	border-style: solid;
+	border-color: #C4C4C4;
+	border-width: 1px 0;
+	height: 100%;
+}
+
+#header{
+	padding: 1px 0px;
+}
+#header>h1{
+	margin: 4px 0;
+}
+#header>p{
+	margin: 4px 0;
+}
+
+#footer{
+	padding: 1px 0px;
+	background-color: #FFFFFF;
+	width: 100%;
+}
+
+#inputPanel{
+	position: relative;
+}
+
+#input{
+	margin: 5px;
+	box-sizing: border-box;
+	width: calc(100% - 10px);
+}
+
+#submit{
+
+	padding: 0;
+	margin: 0;
+	color: #FFFFFF;
+	position: absolute;
+	right: -47px;
+	top: 0;
+	cursor: pointer;
+	box-shadow: 0 0 4px #B0B0B0;
+	height: 38px;
+	width: 38px;
+	/*border-style: none;*/
+	box-sizing: border-box;
+	border-radius: 50%;
+	border: solid 4px #FFFFFF;
+	background-color: #A7A7A7;
+}
+
+#submit>i{
+	margin-top: -6px;
+	transform: scale(0.9,0.8);
+}
+
+#submit:hover{
+	background-color: #E4AAFF;
+	box-shadow: 0 0 6px #B0B0B0;
+}
+
+#submit:active{
+	color: #E4AAFF;
+	border-color: #E4AAFF;
+	background-color: #FFFFFF;
+	box-shadow: 0 0 12px #B0B0B0;
+}
+
+#submit, #submit:hover{
+	transition: color .2s, border-color .2s, background-color .2s, box-shadow .2s;
+	-moz-transition: color .2s, border-color .2s, background-color .2s, box-shadow .2s;
+	-webkit-transition: color .2s, border-color .2s, background-color .2s, box-shadow .2s;
+	-o-transition: color .2s, border-color .2s, background-color .2s, box-shadow .2s;
+}
+
+#submit:active{
+	transition: color 0s, border-color 0s, background-color 0s, box-shadow 0s;
+	-moz-transition: color 0s, border-color 0s, background-color 0s, box-shadow 0s;
+	-webkit-transition: color 0s, border-color 0s, background-color 0s, box-shadow 0s;
+	-o-transition: color 0s, border-color 0s, background-color 0s, box-shadow 0s;
+}
+
+#submit:focus{
+	outline: 0;
+}
+
+.mCSB_outside+.mCSB_scrollTools{
+	right: -32px;
+}
+
+/*.mCSB_dragger .mCSB_dragger_bar{ background-color: green; }
+
+.mCS-dark.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar:hover{
+	background-color: #E4AAFF;
+}*/
+/*right element space*/
+.container{
+	padding: 0 50px 0 0;
+	width: calc(95% - 40px);
+}

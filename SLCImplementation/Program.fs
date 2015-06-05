@@ -49,7 +49,7 @@ let submit s =
 #if TOJS
 [<EntryPoint>]
 let main args =
-    let sw = new IO.StreamWriter("slc.js")
+    let sw = new IO.StreamWriter(@"..\..\..\Try-SLC\js\slc.js")
     Compiler.compile(<@ submit @>) |> sprintf "function getSubmit(){\n%s;\n}" |> sw.Write
     sw.Close()
     0

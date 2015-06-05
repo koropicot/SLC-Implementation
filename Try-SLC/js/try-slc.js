@@ -59,7 +59,7 @@ function createOutputCard(code, output, error, name){
 	return div.append(pre).append(p);
 }
 
-submit = getSubmit();
+var submit = getSubmit();
 
 function onSubmit(){
 	var input = $('#input').val();

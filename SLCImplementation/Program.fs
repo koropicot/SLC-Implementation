@@ -44,7 +44,7 @@ let submit s =
         | Def (n, e) -> createOutputCard s (zd_to_str n e) false n
         | Eval e -> createOutputCard s (z_to_str e) false ""
     with ex ->
-        createOutputCard s ("Error: " + ex.Message) true ""
+        createOutputCard s ("Error: " + ex.ToString()) true ""
 
 #if TOJS
 [<EntryPoint>]

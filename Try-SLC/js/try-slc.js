@@ -37,8 +37,6 @@ $(document).ready(function() {
 			if((e.keyCode || e.which) == 13){
 				e.preventDefault();
 				onSubmit();
-				this.value = '';
-				autosize.update(this);
 			}
 		}
 	})
@@ -67,10 +65,7 @@ function onSubmit(){
 	var input = $('#input').val();
 	var ret = submit(input);
 	$('#output .mCSB_container').append(ret);
-	// if(input == 'error'){
-	// 	$('#output .mCSB_container').append(createOutputCard(input, 'Error', true, 'hoge'));
-	// }else{
-	// 	$('#output .mCSB_container').append(createOutputCard(input, 'Output', false, 'hoge'));
-	// }
+	$('#input').val('');
+	autosize.update($('#input'));
 	$('#output').mCustomScrollbar('scrollTo', 'bottom', {scrollInertia:300});
 }

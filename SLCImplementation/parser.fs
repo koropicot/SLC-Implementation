@@ -1,4 +1,5 @@
-﻿module parser
+﻿[<FunScript.JS>]
+module parser
 
 type Parser<'s, 'r> = 's[] * int->Option<'r * int>
 type Either<'l, 'r> = | Left of 'l | Right of 'r

@@ -1,3 +1,4 @@
+[<FunScript.JS>]
 module lexer
 open System.Text.RegularExpressions
 

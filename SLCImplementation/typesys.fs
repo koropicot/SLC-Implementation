@@ -1,4 +1,5 @@
 ﻿//SLC/SCL type system (pp.109-110)
+[<FunScript.JS>]
 module typesys
 open unify
 

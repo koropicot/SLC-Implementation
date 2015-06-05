@@ -1,4 +1,5 @@
-﻿module Program
+﻿[<FunScript.JS>]
+module Program
 open System
 open form
 open preparse

@@ -1,4 +1,5 @@
 ﻿//parser for SLC terms (CBV recursion) (pp.104-106)
+[<FunScript.JS>]
 module parse
 
 open form

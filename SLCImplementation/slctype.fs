@@ -1,4 +1,5 @@
 ﻿//type inferencer for SLC terms (pp.109-110)
+[<FunScript.JS>]
 module slctype
 open slc
 open unify

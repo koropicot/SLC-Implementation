@@ -1,4 +1,5 @@
 ﻿//syntactic forms recognized by the YACC pre-parser (pp.103-104)
+[<FunScript.JS>]
 module form
 
 type form =

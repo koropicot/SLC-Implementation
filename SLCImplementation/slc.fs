@@ -1,4 +1,5 @@
 ﻿//abstract syntax of the SLC (p.106)
+[<FunScript.JS>]
 module slc
 
 type var = string

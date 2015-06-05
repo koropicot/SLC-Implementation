@@ -1,4 +1,5 @@
 ﻿//semantic domains for CBV evaluation (p.112)
+[<FunScript.JS>]
 module cbveval
 open slc
 open typesys

@@ -1,4 +1,5 @@
 ﻿//unification and resolution theorem prover (pp.108-109)
+[<FunScript.JS>]
 module unify
 
 type term =

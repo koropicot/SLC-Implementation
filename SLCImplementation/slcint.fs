@@ -1,4 +1,5 @@
 ﻿//CBV interpreter for SLC terms (pp.112-113)
+[<FunScript.JS>]
 module slcint
 open slc
 open cbveval

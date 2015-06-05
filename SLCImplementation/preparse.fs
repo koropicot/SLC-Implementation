@@ -1,4 +1,5 @@
-﻿module preparse
+﻿[<FunScript.JS>]
+module preparse
 open lexer
 open parser
 open form

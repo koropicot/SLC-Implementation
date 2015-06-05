@@ -16,7 +16,7 @@ let vtop r v =
     | ((RCnt _),_)-> KCnt
     | (RErr, _) -> failwith ("Unknown identifier: " + v)
 
-let num_to_str: int->string = string
+let num_to_str (n:int) = string n
 
 let rec v_to_str v = function
     | TVV _ -> failwith "polymorphic value"

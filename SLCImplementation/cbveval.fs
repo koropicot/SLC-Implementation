@@ -10,13 +10,15 @@ let genId () =
     id := !id + 1
     !id
 
+type 'f labeled = Label of int * 'f
+
 type Val =
     | VInt of int
     | VUnit
     | VPair of Val * Val
     | VIn1 of Val
     | VIn2 of Val
-    | VClosr of (int * (Val->Cnt->Ans))
+    | VClosr of ((Val->Cnt->Ans) labeled)
     | VContx of Val * Cnt
     static member eq vx vy =
         match (vx, vy) with
@@ -25,16 +27,16 @@ type Val =
         | (VPair (v1l, v1r), VPair (v2l, v2r)) -> Val.eq v1l v2l && Val.eq v1r v2r
         | (VIn1 v1, VIn1 v2) -> Val.eq v1 v2
         | (VIn2 v1, VIn2 v2) -> Val.eq v1 v2
-        | (VClosr (l1, _), VClosr (l2, _)) -> l1 = l2
-        | (VContx (v1, (l1, _)), VContx (v2, (l2, _))) -> Val.eq v1 v2 && l1 = l2
+        | (VClosr (Label(l1, _)), VClosr (Label(l2, _))) -> l1 = l2
+        | (VContx (v1, (Label(l1, _))), VContx (v2, (Label(l2, _)))) -> Val.eq v1 v2 && l1 = l2
         | _ -> false
-and Cnt = int * (Val->Ans)
+and Cnt = (Val->Ans) labeled
 and Ans =
     | AResult of Val
     | AError
 
-let label f = (genId(), f)
-let unlabel (_, f) = f
+let label f = Label(genId(), f)
+let unlabel = function Label(_, f) -> f
 let labeledAResult = label AResult
 
 type rvar =

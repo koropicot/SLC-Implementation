@@ -1,6 +1,7 @@
 ﻿//unification and resolution theorem prover (pp.108-109)
 [<FunScript.JS>]
 module unify
+open common
 
 type term =
     | TVar of int
@@ -9,18 +10,19 @@ and subst = (int->term)
 
 let emptysubst = TVar
 
-let rec unify (x1,x2) =
-    if x1=x2 || x1=TVar 0 || x2=TVar 0 then emptysubst
-    else match (x1,x2) with
-            | ((TVar x1), t2) -> bind x1 t2
-            | (t1, (TVar x2)) -> bind x2 t1
-            | (TFun(f1,l1), TFun(f2,l2)) ->
-                if f1=f2 then unifylist (l1,l2) else failwith "functor"
+let rec unify = function
+    Tuple(x1,x2) ->
+        if x1=x2 || x1=TVar 0 || x2=TVar 0 then emptysubst
+        else match (x1,x2) with
+                | ((TVar x1), t2) -> bind x1 t2
+                | (t1, (TVar x2)) -> bind x2 t1
+                | (TFun(f1,l1), TFun(f2,l2)) ->
+                    if f1=f2 then unifylist (Tuple(l1,l2)) else failwith "functor"
 and unifylist = function
-    | ([],[]) -> emptysubst
-    | (x1::l1, x2::l2) ->
-        let sl=unifylist (l1,l2) in
-            let s=unify(substitute sl x1, substitute sl x2) in
+    | Tuple([],[]) -> emptysubst
+    | Tuple(x1::l1, x2::l2) ->
+        let sl=unifylist (Tuple(l1,l2)) in
+            let s=unify (Tuple(substitute sl x1, substitute sl x2)) in
                 (substitute s) << sl
     | _ -> failwith "arity"
 and bind x t =
@@ -49,7 +51,7 @@ let V5 = TVar 5
 type ProofTree = PT of int * term * ((ProofTree * term) list)
 
 let rec solve (PT(n, t1, l)) t x s =
-    let s1=(substitute (unify(instance x t1, substitute s t))) << s in
+    let s1=(substitute (unify (Tuple(instance x t1, substitute s t)))) << s in
         let l1=List.map (fun (p,t)->(p,(instance x t))) l in
             solvelist l1 (x+n) s1
 and solvelist l x s =

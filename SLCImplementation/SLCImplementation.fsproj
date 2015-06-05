@@ -69,6 +69,7 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
   <ItemGroup>
+    <Compile Include="common.fs" />
     <Compile Include="lexer.fs" />
     <Compile Include="parser.fs" />
     <Compile Include="form.fs" />

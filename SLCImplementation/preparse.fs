@@ -13,8 +13,17 @@ type token =
     | NUM of int
     | EOF
 
+[<FunScript.JSEmit("return Number({0})")>]
+let number x = failwith "never"
+
 let patterns = [|
-        (@"\s", skip); (@"[0-9]+", value >> int>> NUM >> Some); (":=", constant DEF)
+        (@"\s", skip);
+#if TOJS
+        (@"[0-9]+", value >> number >> NUM >> Some);
+#else
+        (@"[0-9]+", value >> int >> NUM >> Some);
+#endif
+        (":=", constant DEF);
         ("<=", constant LEFT); ("=>", constant RIGHT); ("rec", constant REC); ("=", constant EQ);
         ("\+", constant PLUS); ("\-", constant MINUS); ("\*", constant TIMES);
         ("\^", constant HAT); ("\?", constant QMARK);
@@ -70,9 +79,11 @@ and flist s =
     form %& rep (terminal COMMA %&. form) +>= fun (h, t) -> h :: t
     <| s
 
-let start (s: token[] * int) =
+let start s =
     ident .%& terminal DEF %& form  .%& terminal EOF +>= Def
     .| form .%& terminal EOF +>= Eval
     <| s
 
-let pre_parse = tokenize EOF patterns >> parse start
+let pre_parse s =
+    let tokens = tokenize EOF patterns s
+    parse start tokens

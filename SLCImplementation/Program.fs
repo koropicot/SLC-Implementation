@@ -16,17 +16,19 @@ let rec repl () =
     printf "SLC> "
     let line =
       Console.ReadLine()
-      |> function null -> "quit" | l -> l.Trim()
+      |> function null -> "#quit" | l -> l.Trim()
     match line with
-    | "quit" -> ()
-    | "help" | "" ->
+    | "#quit" -> printfn "Exit..."
+    | "#help" | "" ->
         printfn "Usage:"
-        printfn "    >expression"
-        printfn "        evaluate expression"
-        printfn "    >name := expression"
-        printfn "        evaluate expression and define it"
-        printfn "    >quit"
-        printfn "        quit repl"
+        printfn "> expression"
+        printfn "    evaluate expression"
+        printfn "> name := expression"
+        printfn "    evaluate expression and define it"
+        printfn "> #quit"
+        printfn "    quit repl"
+        printfn "> #help"
+        printfn "    show this usage"
         repl ()
     | s ->
         try
@@ -35,7 +37,7 @@ let rec repl () =
             | Eval e -> printfn "%s" (z_to_str e)
         with ex ->
             printfn "Error: %s" ex.Message
-            printfn "show usage: >help"
+            printfn "#help for usage"
         repl ()
 
 

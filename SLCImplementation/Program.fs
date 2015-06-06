@@ -7,7 +7,10 @@ open toplev
 //REPL
 let rec repl () =
     printf ">"
-    match Console.ReadLine().Trim() with
+    let line =
+      Console.ReadLine()
+      |> function null -> "quit" | l -> l.Trim()
+    match line with
     | "quit" -> ()
     | "help" | "" ->
         printfn "Usage:"

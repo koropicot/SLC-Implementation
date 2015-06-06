@@ -13,7 +13,7 @@ open FunScript.TypeScript
 
 //REPL
 let rec repl () =
-    printf ">"
+    printf "SLC> "
     let line =
       Console.ReadLine()
       |> function null -> "quit" | l -> l.Trim()

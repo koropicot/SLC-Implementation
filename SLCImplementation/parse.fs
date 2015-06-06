@@ -1,5 +1,7 @@
 ﻿//parser for SLC terms (CBV recursion) (pp.104-106)
+#if TOJS
 [<FunScript.JS>]
+#endif
 module parse
 
 open form

@@ -1,5 +1,7 @@
 ﻿//abstract syntax of the SLC (p.106)
+#if TOJS
 [<FunScript.JS>]
+#endif
 module slc
 
 type var = string

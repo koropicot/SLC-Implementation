@@ -1,5 +1,7 @@
 ﻿//unification and resolution theorem prover (pp.108-109)
+#if TOJS
 [<FunScript.JS>]
+#endif
 module unify
 open common
 

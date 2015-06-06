@@ -1,25 +1,34 @@
-﻿[<FunScript.JS>]
+﻿#if TOJS
+[<FunScript.JS>]
+#endif
 module Program
 open System
 open form
 open preparse
 open toplev
+#if TOJS
 open FunScript
 open FunScript.TypeScript
+#endif
 
 //REPL
 let rec repl () =
-    printf ">"
-    match Console.ReadLine().Trim() with
-    | "quit" -> ()
-    | "help" | "" ->
+    printf "SLC> "
+    let line =
+      Console.ReadLine()
+      |> function null -> "#quit" | l -> l.Trim()
+    match line with
+    | "#quit" -> printfn "Exit..."
+    | "#help" | "" ->
         printfn "Usage:"
-        printfn "    >expression"
-        printfn "        evaluate expression"
-        printfn "    >name := expression"
-        printfn "        evaluate expression and define it"
-        printfn "    >quit"
-        printfn "        quit repl"
+        printfn "> expression"
+        printfn "    evaluate expression"
+        printfn "> name := expression"
+        printfn "    evaluate expression and define it"
+        printfn "> #quit"
+        printfn "    quit repl"
+        printfn "> #help"
+        printfn "    show this usage"
         repl ()
     | s ->
         try
@@ -28,12 +37,12 @@ let rec repl () =
             | Eval e -> printfn "%s" (z_to_str e)
         with ex ->
             printfn "Error: %s" ex.Message
-            printfn "show usage: >help"
+            printfn "#help for usage"
         repl ()
 
 
 
-
+#if TOJS
 //JSFFI
 [<JSEmit("return createOutputCard({0}, {1}, {2}, {3})")>]
 let createOutputCard (code: string) (output: string) (error: bool) (name: string): 'TAny = failwith "never"
@@ -46,7 +55,6 @@ let submit s =
     with ex ->
         createOutputCard s ("Error: " + ex.ToString()) true ""
 
-#if TOJS
 [<EntryPoint>]
 let main args =
     let sw = new IO.StreamWriter(@"..\..\..\Try-SLC\js\slc.js")

@@ -1,4 +1,6 @@
-﻿[<FunScript.JS>]
+﻿#if TOJS
+[<FunScript.JS>]
+#endif
 module parser
 open common
 

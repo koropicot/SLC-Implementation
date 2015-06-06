@@ -1,5 +1,7 @@
 ﻿//type inferencer for SLC terms (pp.109-110)
+#if TOJS
 [<FunScript.JS>]
+#endif
 module slctype
 open common
 open slc

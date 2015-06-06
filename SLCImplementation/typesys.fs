@@ -1,5 +1,7 @@
 ﻿//SLC/SCL type system (pp.109-110)
+#if TOJS
 [<FunScript.JS>]
+#endif
 module typesys
 open unify
 

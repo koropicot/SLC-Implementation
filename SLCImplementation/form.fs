@@ -1,5 +1,7 @@
 ﻿//syntactic forms recognized by the YACC pre-parser (pp.103-104)
+#if TOJS
 [<FunScript.JS>]
+#endif
 module form
 
 type form =

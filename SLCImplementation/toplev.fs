@@ -1,5 +1,7 @@
 ﻿//top level interaction (pp.114-115)
+#if TOJS
 [<FunScript.JS>]
+#endif
 module toplev
 open parse
 open typesys

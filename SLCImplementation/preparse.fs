@@ -1,4 +1,6 @@
-﻿[<FunScript.JS>]
+﻿#if TOJS
+[<FunScript.JS>]
+#endif
 module preparse
 open lexer
 open parser
@@ -13,7 +15,9 @@ type token =
     | NUM of int
     | EOF
 
+#if TOJS
 [<FunScript.JSEmit("return Number({0})")>]
+#endif
 let number x = failwith "never"
 
 let patterns = [|

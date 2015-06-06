@@ -1,4 +1,6 @@
+#if TOJS
 [<FunScript.JS>]
+#endif
 module lexer
 open System.Text.RegularExpressions
 

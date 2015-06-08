@@ -13,16 +13,13 @@ type token =
     | NUM of int
     | EOF
 
+#if TOJS
 [<FunScript.JSEmit("return Number({0})")>]
-let number x = failwith "never"
+let int x = failwith "never"
+#endif
 
 let patterns = [|
-        (@"\s", skip);
-#if TOJS
-        (@"[0-9]+", value >> number >> NUM >> Some);
-#else
-        (@"[0-9]+", value >> int >> NUM >> Some);
-#endif
+        (@"\s", skip); (@"[0-9]+", value >> int >> NUM >> Some);
         (":=", constant DEF);
         ("<=", constant LEFT); ("=>", constant RIGHT); ("rec", constant REC); ("=", constant EQ);
         ("\+", constant PLUS); ("\-", constant MINUS); ("\*", constant TIMES);

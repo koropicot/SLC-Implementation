@@ -6,6 +6,10 @@
 	font-family: 'Source Code Pro', 'Meiryo';
 }
 
+body{
+	-webkit-text-size-adjust: 100%;
+}
+
 html, body{
 	margin: 0;
 	padding: 0;
@@ -17,6 +21,10 @@ html, body{
 	height: 100%;
 	width: 95%;
 	max-width: 720px;
+}
+
+h1{
+	font-size: 28px;
 }
 
 .card{
@@ -37,20 +45,22 @@ html, body{
 	border-color: #A7A7A7;
 	border-width: 0 0 1px 12px;
 	padding: 4px 10px;
-	font-size: 18px;
 }
 
 .card .code{
 	margin: 5px;
 	white-space: pre-wrap;
 	word-break: break-all;
+	font-size: 16px;
 }
 
 .card p{
 	margin: 5px;
+	font-size: 16px;
 }
 
 textarea{
+	border-radius: 0;
 	outline: 0;
 	resize: none;
 }
@@ -89,10 +99,7 @@ textarea, textarea:hover, textarea:focus{
 	padding: 1px 0px;
 }
 #header>h1{
-	margin: 4px 0;
-}
-#header>p{
-	margin: 4px 0;
+	margin: 2px 5px;
 }
 
 #footer{

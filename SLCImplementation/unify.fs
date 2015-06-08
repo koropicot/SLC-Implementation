@@ -8,6 +8,7 @@ type term =
     | TFun of string * (term list)
 and subst = (int->term)
 
+
 let emptysubst = TVar
 
 let rec unify = function
@@ -27,10 +28,12 @@ and unifylist = function
     | _ -> failwith "arity"
 and bind x t =
     if occurs x t then failwith "occur"
-    else (fun x1->if x1=x then t else TVar x1)
-and substitute s = function
+    else (fun x1-> if x1=x then t else TVar x1)
+and substitute s =
+    let f = function
     | TVar x -> s x
     | TFun (f,l) -> TFun(f, List.map (substitute s) l)
+    f
 and occurs x = function
     | TVar x1 -> x1=x
     | TFun (_,l) -> foldor (occurs x) l
@@ -51,7 +54,8 @@ let V5 = TVar 5
 type ProofTree = PT of int * term * ((ProofTree * term) list)
 
 let rec solve (PT(n, t1, l)) t x s =
-    let s1=(substitute (unify (Tuple(instance x t1, substitute s t)))) << s in
+    let ss = (substitute (unify (Tuple(instance x t1, substitute s t)))) in
+    let s1= ss << s in
         let l1=List.map (fun (p,t)->(p,(instance x t))) l in
             solvelist l1 (x+n) s1
 and solvelist l x s =
@@ -60,6 +64,7 @@ and solvelist l x s =
         | (p,t)::tr -> let (s1,x1)=solve p t x s in solvelist tr x1 s1
 
 (* generalize term to clause *)
+
 
 let rec addl x = function
     | [] -> (1,[x])

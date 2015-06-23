@@ -33,7 +33,7 @@ $(document).ready(function() {
 				this.selectionEnd = s + 1;
 			}
 		}
-		if(e.shiftKey){
+		if(e.shiftKey || e.ctrlKey){
 			if((e.keyCode || e.which) == 13){
 				e.preventDefault();
 				onSubmit();
